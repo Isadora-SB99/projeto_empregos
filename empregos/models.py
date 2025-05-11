@@ -9,6 +9,8 @@ AREA_CHOICES = [
 TIPO_CONTRATO_CHOICES = [
     ('E', 'Estágio'),
     ('C', 'CLT'),
+    ('CP', 'Cooperativa'),
+    ('P', 'PJ'),
 ]
 
 GENERO_CHOICES = [
@@ -18,35 +20,34 @@ GENERO_CHOICES = [
     ('O', 'Outro'),
 ]
 
-
 ESCOLARIDADE_CHOICES = [
-    ('fun', 'Fundamental'),
-    ('med', 'Médio'),
-    ('sup', 'Superior'),
-    ('pos', 'Pós-graduação'),
-    ('mes', 'Mestrado'),
-    ('dou', 'Doutorado'),
+    ('FUN', 'Fundamental'),
+    ('MED', 'Médio'),
+    ('SUP', 'Superior'),
+    ('POS', 'Pós-graduação'),
+    ('MES', 'Mestrado'),
+    ('DOC', 'Doutorado'),
 ]
 
 
 class Vaga(models.Model):
     titulo = models.CharField(max_length=100)
-    area = models.CharField(max_length=100, choices=AREA_CHOICES)
-    tipo_contrato = models.CharField(max_length=100, choices=TIPO_CONTRATO_CHOICES)
+    area = models.CharField(max_length=1, choices=AREA_CHOICES)
+    tipo_contrato = models.CharField(max_length=2, choices=TIPO_CONTRATO_CHOICES)
     descricao = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.nome
+        return self.titulo
 
 
 class Candidato(models.Model):
     nome = models.CharField(max_length=100)
     sobrenome = models.CharField(max_length=100)
     data_nascimento = models.DateField()
-    genero = models.CharField(max_length=30, choices=GENERO_CHOICES)
+    genero = models.CharField(max_length=2, choices=GENERO_CHOICES)
     email = models.CharField(max_length=140, unique=True)
     telefone = models.CharField(max_length=11, unique=True)
-    escolaridade = models.CharField(max_length=50, choices=ESCOLARIDADE_CHOICES)
+    escolaridade = models.CharField(max_length=3, choices=ESCOLARIDADE_CHOICES)
 
     def __str__(self):
-        return self.nome
+        return self.nome+' '+self.sobrenome
