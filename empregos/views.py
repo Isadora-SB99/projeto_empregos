@@ -1,50 +1,42 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Vaga, Candidato
-from .forms import CandidatoForm, VagaForm
-
-# Create your views here.
+from .forms import VagaForm, CandidatoForm
 
 def index(request):
     return render(request, 'empregos/index.html')
 
-def candidatos(request):
-    candidatos = Candidato.objects.all()
-    dados = {
-        'candidatos': candidatos,
-    }
-    return render(request, 'empregos/lista_candidatos.html', dados)
-
 def vagas(request):
     vagas = Vaga.objects.all()
-    dados = {
-        'vagas': vagas,
-    }
-    return render(request, 'empregos/lista_vagas.html', dados)
+    return render(request, 'empregos/lista_vagas.html', {'vagas': vagas})
 
-def detalhe_vaga(request, vaga_nome):
-    vaga = Vaga.objects.get(nome=vaga_nome)
-    dados = {
-        'vaga': vaga,
-    }
-    return render(request, 'empregos/detalhe_vaga.html', dados)
+def detalhe_vaga(request, pk):
+    vaga = get_object_or_404(Vaga, pk=pk)
+    return render(request, 'empregos/detalhe_vaga.html', {'vaga': vaga})
 
-def detalhe_candidato(request, candidato_nome):
-    candidato = Candidato.objects.get(nome=candidato_nome)
-    dados = {
-        'candidato': candidato,
-    }
-    return render(request, 'empregos/detalhe_candidato.html', dados)
+def candidatos(request):
+    candidatos = Candidato.objects.select_related('vaga').all()
+    return render(request, 'empregos/lista_candidatos.html', {'candidatos': candidatos})
+
+def detalhe_candidato(request, pk):
+    candidato = get_object_or_404(Candidato, pk=pk)
+    return render(request, 'empregos/detalhe_candidato.html', {'candidato': candidato})
 
 def cadastrar_vaga(request):
-    form = VagaForm() 
-    dados = {
-        'form': form,
-    }
-    return render(request, 'empregos/cadastrar_vaga.html', dados)   
+    if request.method == 'POST':
+        form = VagaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('vagas')
+    else:
+        form = VagaForm()
+    return render(request, 'empregos/cadastrar_vaga.html', {'form': form})
 
 def cadastrar_candidato(request):
-    form = CandidatoForm()
-    dados = {
-        'form': form,
-    }
-    return render(request, 'empregos/cadastrar_candidato.html', dados)
+    if request.method == 'POST':
+        form = CandidatoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('candidatos')
+    else:
+        form = CandidatoForm()
+    return render(request, 'empregos/cadastrar_candidato.html', {'form': form})

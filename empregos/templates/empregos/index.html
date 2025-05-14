@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index de Empregos</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Empregos – Home</title>
 </head>
 <body>
-    <h1>Index de Empregos</h1>
-
-    <p><a href=" {% url 'vagas' %}">Lista de vagas</a></p> 
-    <p><a href=" {% url 'candidatos' %}">Lista de candidatos</a></p> 
-    <p><a href=" {% url 'cadastrar_vaga' %}">Cadastro de Vaga</a></p> 
-    <p><a href=" {% url 'cadastrar_candidato' %}">Cadastro de Candidato</a></p> 
+  <h1>Bem-vindo ao Sistema de Empregos</h1>
+  <nav>
+    <a href="{% url 'vagas' %}">Vagas</a> |
+    <a href="{% url 'candidatos' %}">Candidatos</a> |
+    <a href="{% url 'cadastrar_vaga' %}">Cadastrar Vaga</a> |
+    <a href="{% url 'cadastrar_candidato' %}">Cadastrar Candidato</a>
+  </nav>
 </body>
 </html>

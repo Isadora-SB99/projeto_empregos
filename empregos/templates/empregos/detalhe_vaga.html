@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalhe da Vaga</title>
+</head>
+<body>
+  <h1>{{ vaga.titulo }}</h1>
+  <p><strong>Área:</strong> {{ vaga.get_area_display }}</p>
+  <p><strong>Tipo de Contrato:</strong> {{ vaga.get_tipo_contrato_display }}</p>
+  <p><strong>Descrição:</strong> {{ vaga.descricao }}</p>
+
+  <h2>Candidatos Inscritos</h2>
+  <ul>
+    {% for cand in vaga.candidatos.all %}
+      <li>
+        <a href="{% url 'detalhe_candidato' cand.pk %}">
+          {{ cand.nome }} {{ cand.sobrenome }}
+        </a>
+      </li>
+    {% empty %}
+      <li>— Nenhum candidato inscrito.</li>
+    {% endfor %}
+  </ul>
+
+  <p><a href="{% url 'vagas' %}">← Voltar à lista de vagas</a></p>
+</body>
+</html>

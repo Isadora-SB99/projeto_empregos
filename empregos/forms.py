@@ -1,15 +1,19 @@
 from django import forms
 from .models import Candidato, Vaga
 
-# Formulário para Candidato
 class CandidatoForm(forms.ModelForm):
-    data_nascimento = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    data_nascimento = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'})
+    )
 
     class Meta:
         model = Candidato
-        fields = ['nome', 'sobrenome', 'data_nascimento', 'genero', 'email', 'telefone', 'escolaridade']
+        fields = [
+            'nome', 'sobrenome', 'data_nascimento',
+            'genero', 'email', 'telefone',
+            'escolaridade', 'vaga'
+        ]
 
-#Formulário para Vaga
 class VagaForm(forms.ModelForm):
     class Meta:
         model = Vaga

@@ -29,7 +29,6 @@ ESCOLARIDADE_CHOICES = [
     ('DOC', 'Doutorado'),
 ]
 
-
 class Vaga(models.Model):
     titulo = models.CharField(max_length=100)
     area = models.CharField(max_length=1, choices=AREA_CHOICES)
@@ -39,7 +38,6 @@ class Vaga(models.Model):
     def __str__(self):
         return self.titulo
 
-
 class Candidato(models.Model):
     nome = models.CharField(max_length=100)
     sobrenome = models.CharField(max_length=100)
@@ -48,6 +46,7 @@ class Candidato(models.Model):
     email = models.CharField(max_length=140, unique=True)
     telefone = models.CharField(max_length=11, unique=True)
     escolaridade = models.CharField(max_length=3, choices=ESCOLARIDADE_CHOICES)
+    vaga = models.ForeignKey(Vaga, on_delete=models.CASCADE, null=True, blank=True, related_name='candidatos')
 
     def __str__(self):
-        return self.nome+' '+self.sobrenome
+        return f"{self.nome} {self.sobrenome}"

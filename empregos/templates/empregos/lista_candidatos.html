@@ -1,33 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de candidatos</title>
+  <meta charset="UTF-8">
+  <title>Lista de Candidatos</title>
 </head>
 <body>
-    <h1>Lista de candidatos</h1>
-    <table border="1" cellpadding="5" cellspacing="3">
-        <tr>
-            <th>Nome</th>
-            <th>Sobrenome</th>
-            <th>Gênero</th>
-            <th>Vaga</th>
-        </tr>
-        {% for candidato in candidatos %}
-        <tr>
-            <td>{{ candidato.nome }}</td>
-            <td>{{ candidato.sobrenome }}</td>
-            <td>{{ candidato.get_genero_display }}</td>
-            <td>Vaga</td><!--colocar a vaga de forma dinâmica-->
-
-        </tr>
-        {% endfor %}
-    </table>
-
-    <p><a href=" {% url 'cadastrar_vaga' %}">Cadastro de Vaga</a></p> 
-    <p><a href=" {% url 'cadastrar_candidato' %}">Cadastro de Candidato</a></p>
-    <p><a href=" {% url 'index' %}">Página inicial</a></p> 
-
+  <h1>Lista de Candidatos</h1>
+  <table border="1" cellpadding="5" cellspacing="3">
+    <tr>
+      <th>Nome</th>
+      <th>Sobrenome</th>
+      <th>Gênero</th>
+      <th>Vaga</th>
+    </tr>
+    {% for candidato in candidatos %}
+    <tr>
+      <td><a href="{% url 'detalhe_candidato' candidato.pk %}">{{ candidato.nome }}</a></td>
+      <td>{{ candidato.sobrenome }}</td>
+      <td>{{ candidato.get_genero_display }}</td>
+      <td>
+        {% if candidato.vaga %}
+          <a href="{% url 'detalhe_vaga' candidato.vaga.pk %}">{{ candidato.vaga.titulo }}</a>
+        {% else %}
+          —
+        {% endif %}
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4">Não há candidatos cadastrados.</td></tr>
+    {% endfor %}
+  </table>
+  <p><a href="{% url 'cadastrar_candidato' %}"> Novo Candidato</a></p>
+  <p><a href="{% url 'index' %}">← Página inicial</a></p>
 </body>
 </html>

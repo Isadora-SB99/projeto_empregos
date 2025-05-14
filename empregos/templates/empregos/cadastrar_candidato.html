@@ -1,23 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de candidato</title>
+  <meta charset="UTF-8">
+  <title>Cadastrar Candidato</title>
 </head>
 <body>
-    
-    <h1>Cadastro de candidato</h1>
-
-     <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-
-        <button type="submit">Cadastrar Candidato</button>
-    </form>
-    
-    <p><a href=" {% url 'candidatos' %}">Lista de candidatos</a></p>
-    <p><a href=" {% url 'index' %}">Página inicial</a></p> 
-
+  <h1>Cadastrar Novo Candidato</h1>
+  <form method="post">
+    {% csrf_token %}
+    {% if form.errors %}
+      <ul class="errorlist">
+        {% for field in form %}
+          {% for error in field.errors %}
+            <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+          {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {{ form.as_p }}
+    <button type="submit">Salvar</button>
+  </form>
+  <p><a href="{% url 'candidatos' %}">← Voltar aos candidatos</a></p>
 </body>
 </html>

@@ -1,23 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de vaga</title>
+  <meta charset="UTF-8">
+  <title>Cadastrar Vaga</title>
 </head>
 <body>
-    
-    <h1>Cadastro de vaga</h1>
-
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        
-        <button type="submit">Cadastrar Vaga</button>
-    </form>
-
-    <p><a href=" {% url 'vagas' %}">Lista de vagas</a></p>
-    <p><a href=" {% url 'index' %}">Página inicial</a></p> 
-
+  <h1>Cadastrar Nova Vaga</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salvar</button>
+  </form>
+  <p><a href="{% url 'vagas' %}">← Voltar às vagas</a></p>
 </body>
 </html>

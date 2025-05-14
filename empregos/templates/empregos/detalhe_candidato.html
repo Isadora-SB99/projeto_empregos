@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalhe do Candidato</title>
+</head>
+<body>
+  <h1>{{ candidato.nome }} {{ candidato.sobrenome }}</h1>
+  <p><strong>Data Nasc.:</strong> {{ candidato.data_nascimento }}</p>
+  <p><strong>Gênero:</strong> {{ candidato.get_genero_display }}</p>
+  <p><strong>Email:</strong> {{ candidato.email }}</p>
+  <p><strong>Telefone:</strong> {{ candidato.telefone }}</p>
+  <p><strong>Escolaridade:</strong> {{ candidato.escolaridade }}</p>
+
+  <p><strong>Vaga inscrita:</strong>
+    {% if candidato.vaga %}
+      <a href="{% url 'detalhe_vaga' candidato.vaga.pk %}">
+        {{ candidato.vaga.titulo }}
+      </a>
+    {% else %}
+      —
+    {% endif %}
+  </p>
+
+  <p><a href="{% url 'candidatos' %}">← Voltar à lista de candidatos</a></p>
+</body>
+</html>
